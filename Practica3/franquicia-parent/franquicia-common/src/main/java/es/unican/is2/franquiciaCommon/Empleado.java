@@ -4,6 +4,7 @@ package es.unican.is2.franquiciaCommon;
 
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 /**
  * Clase que representa un empleado de la franquicia, 
  * con sus datos personales 
@@ -38,9 +39,20 @@ public class Empleado {
 	 * Retorna el sueldo bruto del empleado
 	 */
 	public double sueldoBruto() {
-		// TODO
-		return 0;
-	}
+        double base;
+        switch (categoria) {
+            case ENCARGADO: base = 2000; break;
+            case VENDEDOR:  base = 1500; break;
+            case AUXILIAR:  base = 1000; break;
+            default:        base = 0;
+        }
+        long antig = ChronoUnit.YEARS.between(fechaContratacion, LocalDate.now());
+        double comp = antig > 20 ? 200 : antig > 10 ? 100 : antig > 5 ? 50 : 0;
+        double sueldo = base + comp;
+        return baja ? sueldo * 0.75 : sueldo;
+    }
+
+	
 	
 	/** 
 	 * Dar de baja al empleado
