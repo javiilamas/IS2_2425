@@ -28,17 +28,21 @@ public class Empleado {
 	 * @param categoria
 	 * @param fechaContratacion
 	 */
-	public Empleado(String DNI, String nombre, Categoria categoria, LocalDate fechaContratacion) {
+	public Empleado(String DNI, String nombre, Categoria categoria, LocalDate fechaContratacion,boolean baja) {
 		this.nombre = nombre;
 		this.DNI=DNI;
 		this.categoria=categoria;
 		this.fechaContratacion=fechaContratacion;
+		this.baja=baja;
 	}
 	
 	/**
 	 * Retorna el sueldo bruto del empleado
 	 */
 	public double sueldoBruto() {
+		if (categoria == null) {
+	            throw new IllegalStateException("Categoría no establecida");
+	        }
         double base;
         switch (categoria) {
             case ENCARGADO: base = 2000; break;
@@ -74,6 +78,9 @@ public class Empleado {
 	 * @return id
 	 */
 	public String getDNI() {
+		if (DNI== null || DNI.isBlank()) {
+            throw new IllegalArgumentException("DNI nulo o vacío");
+        }
 		return DNI;
 	}
 	
@@ -82,6 +89,9 @@ public class Empleado {
 	 * @return nombre
 	 */
 	public String getNombre() {
+		if (nombre == null || nombre.isBlank()) {
+            throw new IllegalArgumentException("Nombre nulo o vacío");
+        }
 		return nombre;
 	}
 	
@@ -90,6 +100,9 @@ public class Empleado {
 	 *  @return categoria
 	 */
 	public Categoria getCategoria () {
+		if (categoria == null) {
+            throw new NullPointerException("Fecha de contratación nula");
+        }
 		return categoria;
 	}
 	
@@ -98,6 +111,12 @@ public class Empleado {
 	 * @return Fecha de contratacion
 	 */
 	public LocalDate getFechaContratacion() {
+		if (fechaContratacion == null) {
+            throw new NullPointerException("Fecha de contratación nula");
+        }
+        if (fechaContratacion.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Fecha de contratación futura");
+        }
 		return fechaContratacion;
 	}
 	
@@ -112,14 +131,17 @@ public class Empleado {
 		
 	
 	public void setDNI(String dNI) {
+		
 		DNI = dNI;
 	}
 
 	public void setNombre(String nombre) {
+		
 		this.nombre = nombre;
 	}
 	
 	public void setFechaContratacion(LocalDate fechaContratacion) {
+		
 		this.fechaContratacion = fechaContratacion;
 	}
 	

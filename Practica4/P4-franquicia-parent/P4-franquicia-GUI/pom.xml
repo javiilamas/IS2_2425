@@ -11,9 +11,25 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+ 	<file.encoding>UTF-8</file.encoding>
+    
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    
   </properties>
+  <build>
+    <plugins>
+	  <plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-surefire-plugin</artifactId>
+		  <version>3.2.5</version>
+		  <configuration>
+		    <argLine>-Dfile.encoding=UTF-8</argLine>
+		  </configuration>
+	  </plugin>
+   </plugins>
+  </build>
 
   <dependencies>
     <!-- Capa de dominio -->
@@ -28,7 +44,26 @@
       <artifactId>P4-franquicia-business</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
-
+    <!-- Capa DAO (añadida en esta practica) -->
+    <dependency>
+      <groupId>es.unican.is2.franquicia</groupId>
+      <artifactId>P4-franquicia-dao</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+	<dependency>
+		<groupId>org.easytesting</groupId>
+		<artifactId>fest-swing</artifactId>
+		<version>1.2.1</version>
+		<scope>test</scope>
+	</dependency>
+	
+	<dependency><groupId>com.h2database</groupId><artifactId>h2</artifactId><version>2.2.224</version><scope>test</scope></dependency>
+	<dependency>
+	    <groupId>org.junit.jupiter</groupId>
+	    <artifactId>junit-jupiter</artifactId>
+	    <version>5.12.0</version>
+	    <scope>test</scope>
+	</dependency>
     <!-- Swing ya viene con el JDK → no hace falta declarar -->
   </dependencies>
 </project>
